@@ -4,15 +4,13 @@
 
 template<typename T, int size>
 class TStack{
-  private:
+ private:
     T arr[100];
     int max;
-  
-  public:
-    TStack() :max(-1) {}
-  
+ public:
+    TStack() :max(-1) {
     void push(T value){
-      if (IsFull()) {
+      if (isFull()) {
         throw std::string("Stack - full");
       } else {
         arr[++max ] = value;
@@ -25,18 +23,14 @@ class TStack{
         return arr[max--];
       }
     }
-    
     bool isEmpty()const {
       return max == -1;
     }
-    
     bool isFull()const {
       return max == size - 1;
     }
-    
     const T& get()const {
-      return arr[top];
+      return arr[max];
     }
 };
-
 #endif  // INCLUDE_TSTACK_H_
