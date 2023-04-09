@@ -1,41 +1,43 @@
 // Copyright 2021 NNTU-CS
 #ifndef INCLUDE_TSTACK_H_
 #define INCLUDE_TSTACK_H_
-#include <string>
+#include <stdexcept>
+#include <iostream>
 
 template<typename T, int size>
 class TStack {
  private:
-    int top;
-    T* stack;
+  T* data;
+  int count;
 
  public:
-    TStack() : top(-1), stack(new T(size)) {}
-    char Top(void) {
-        if (IsEmpty()) throw std::string("Stack is EMPTY!");
-        else
-            return stack[top];
+  TStack() {
+    data = new T[size];
+    count = 0;
+  }
+  ~TStack() {
+    delete[] data;
+  }
+  void push(T value) {
+    if (count == size) {
+      throw std::out_of_range("Stack overflow");
     }
-    void Push(T value) {
-        if (top == size - 1) {
-            throw std::string("Stack is FULL!");
-        } else {
-            top++;
-            stack[top] = value;
-        }
+    data[count++] = value;
+  }
+  T pop() {
+    if (count == 0) {
+      throw std::out_of_range("Stack - empty");
     }
-    const T& Pop() {
-        if (IsEmpty()) {
-            throw std::string("Stack is EMPTY!");
-        }
-        top--;
-        return stack[top + 1];
+    return data[--count];
+  }
+  T top() const {
+    if (count == 0) {
+      throw std::out_of_range("Stack - empty");
     }
-    bool IsEmpty() {
-        if (top == -1) return true;
-        else
-            return false;
-    }
+    return data[count - 1];
+  }
+  bool isEmpty() const { // проверка на пустоту стека
+    return count == 0;
+  }
 };
-
 #endif  // INCLUDE_TSTACK_H_
