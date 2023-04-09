@@ -4,35 +4,35 @@
 #include <string>
 
 template<typename T, int size>
-class TStack{
+class TStack {
  private:
     T arr[100];
     int top;
 
  public:
-    TStack() :max(-1) {}
+    TStack() :top(-1) {}
     void push(T value) {
       if (isFull()) {
-        throw std::string("Stack - full");
+        throw std::string("Stack is full");
       } else {
-        arr[++max] = value;
+        arr[++top] = value;
       }
     }
     const T& pop() {
       if (isEmpty()) {
-        throw std::string("Stack - empty");
+        throw std::string("Stack is empty");
       } else {
-        return arr[max--];
+        return arr[top--];
       }
     }
     bool isEmpty()const {
-      return max == -1;
+      return top == -1;
     }
     bool isFull()const {
-      return max == size - 1;
+      return top == size - 1;
     }
     const T& get()const {
-      return arr[max];
+      return arr[top];
     }
 };
 
