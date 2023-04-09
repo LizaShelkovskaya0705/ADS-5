@@ -3,26 +3,39 @@
 #define INCLUDE_TSTACK_H_
 #include <string>
 
-template <typename T, int size>
+template<typename T, int size>
 class TStack {
  private:
-  T mass[size] = {0};
-  int a;
+    int top;
+    T* stack;
 
  public:
-  TStack() { a = -1; }
-  void push(const T& value) {
-    if (full()) {
-      throw std::string("  empty!");
-    } else {
-      mass[++a] = value;
+    TStack() : top(-1), stack(new T(size)) {}
+    char Top(void) {
+        if (IsEmpty()) throw std::string("Stack is EMPTY!");
+        else
+            return stack[top];
     }
-  }
-  T pol() const { return mass[a]; }
-  T pop() { return mass[a--]; }
-  int pri() const { return a; }
-  bool empty() const { return a == -1; }
-  bool full() const { return a == size; }
+    void Push(T value) {
+        if (top == size - 1) {
+            throw std::string("Stack is FULL!");
+        } else {
+            top++;
+            stack[top] = value;
+        }
+    }
+    const T& Pop() {
+        if (IsEmpty()) {
+            throw std::string("Stack is EMPTY!");
+        }
+        top--;
+        return stack[top + 1];
+    }
+    bool IsEmpty() {
+        if (top == -1) return true;
+        else
+            return false;
+    }
 };
 
 #endif  // INCLUDE_TSTACK_H_
